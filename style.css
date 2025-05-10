@@ -1,0 +1,66 @@
+/* Estilo para a tela de login */
+.login-screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.014);
+    color: rgba(19, 12, 12, 0.801);
+  }
+  
+  .login-screen input {
+    padding: 10px;
+    margin: 10px;
+    width: 200px;
+    border: none;
+    border-radius: 5px;
+  }
+  
+  .login-screen button {
+    padding: 10px 20px;
+    margin-top: 20px;
+    background-color: #ff69b4;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .login-screen button:hover {
+    background-color: #ff1493;
+  }
+  
+  .login-screen h2 {
+    font-size: 2em;
+  }
+  
+  .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    text-align: center;
+    padding: 20px;
+    color: #fff;
+    text-shadow: 1px 1px 2px #000;
+  }
+  
+  #motivo {
+    font-size: 1.5em;
+    margin-top: 20px;
+  }
+  
+  #username, #password {
+    width: 100%;
+  }
+  
+  button {
+    margin-top: 20px;
+  }
+  
+  #error-message {
+    color: red;
+    display: none;
+    margin-top: 10px;
+  }

@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Você merece meu amor</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-image: url('https://img.freepik.com/vetores-gratis/modelo-de-design-de-padrao-de-cores-a-w_23-2149833273.jpg?t=st=1746839905~exp=1746843505~hmac=e5b287c0ad5e8e2958807fa6da65a1706f6a6d7fc158be5da08de33313d268ba&w=740');
+      background-size: cover;
+      background-position: center;
+      height: 100vh;
+      overflow: hidden;
+      transition: background-image 1s ease-in-out;
+    }
+
+    /* Login */
+    .login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  /* Remover o fundo semitransparente */
+  background: none; 
+  padding: 20px;
+  border-radius: 15px;
+  z-index: 1;
+  position: relative;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+    .login-container input,
+.login-container button {
+  padding: 10px;
+  margin: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: none;
+  width: 250px; /* Ajuste a largura dos campos */
+  max-width: 100%;
+    }
+
+    /* Conteúdo principal */
+    #main-content {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      text-align: center;
+      color: #ffffff;
+      text-shadow: 1px 1px 2px #000;
+      position: relative;
+      z-index: 1;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+
+    .content button {
+      padding: 10px 20px;
+      margin-top: 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 10px;
+      background-color: rgba(255, 105, 180, 0.7);
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .content button:hover {
+      background-color: rgba(255, 105, 180, 1);
+    }
+
+    #motivo {
+      font-size: 1.5em;
+      margin-top: 20px;
+      opacity: 0;
+      transition: opacity 1s ease-in-out; /* Suaviza a transição dos motivos */
+    }
+
+    /* Música e corações */
+    audio {
+      display: none;
+    }
+
+    #heart-button {
+      position: fixed;
+      bottom: 10px;
+      right: 10px;
+      background: transparent;
+      border: none;
+      font-size: 30px;
+      cursor: pointer;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .heart {
+      position: fixed;
+      color: red;
+      animation: float 4s linear infinite;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100vh) scale(1.5);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Música -->
+  <audio id="bg-music" loop>
+    <source src="musica/musica1.mp3" type="audio/mpeg" />
+  </audio>
+
+  <!-- LOGIN -->
+  <div class="login-container" id="login">
+    <input type="text" id="username" placeholder="Usuário" />
+    <input type="password" id="password" placeholder="Senha" />
+    <button onclick="login()">Entrar</button>
+  </div>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+  <div id="main-content">
+    <div class="content">
+      <h1>Coisas que eu AMO em você</h1>
+      <p id="motivo">Clique no botão para ver!</p>
+      <button onclick="mostrarMotivo()">Tap</button>
+    </div>
+    <button id="heart-button" onclick="soltarCoracoes()">❤️</button>
+  </div>
+
+  <script>
+    const motivos = [
+      "Te amar é fácil demais.",
+      "Eu amo estar com você",
+      "Eu amo o seu jeitinho",
+      "Eu amo os seus olhos",
+      "Eu amo como você me entende.",
+      "Eu amo seus carinhos",
+      "Eu amo sua sinceridade",
+      "Eu amo as suas piadas",
+      "Eu amo as suas brincadeiras",
+      "Eu amo o jeito que você fala comigo",
+      "Eu amo a sua voz",
+      "Eu amo os seus dentinhos",
+      "Eu amo como você se planeja",
+      "Eu amo como você está em todos os meus planos",
+      "Eu amo confiar em você",
+      "Eu amo como você confia em mim",
+      "Eu amo passar cada segundo do meu dia pensando em você",
+      "Eu amo estar com saudade segundos depois de me despedir de você",
+      "Eu amo o seu cheiro",
+      "Eu amo suas tatuagens (devemos fazer mais... juntos)",
+      "Eu amo como você segura minha mão",
+      "Eu amo o seu abraço",
+      "Eu amo o seu beijo demorado",
+      "Eu amo quando você tenta me irritar",
+      "Eu amo a sua criatividade",
+      "Eu amo a sua inteligência",
+      "Eu amo o seu jeito bobo",
+      "Eu amo nossas brincadeiras",
+      "Eu amo como você sabe jogar minecraft",
+      "Eu amo como você me conforta",
+      "Eu amo como você sempre me ajuda",
+      "Eu amo a sua sobrancelha",
+      "Eu amo quando você me provoca",
+      "Eu amo a sua língua",
+      "Eu amo ter você",
+      "Eu amo ser SEU",
+      "Eu amo quando você tenta me apertar forte",
+      "Eu amo a sua beleza",
+      "Eu amo te fazer rir",
+      "Eu amo como você nunca me deixa triste",
+      "Eu amo como sempre abro um sorriso quando te vejo",
+      "Eu amo como depois de tanto tempo sou completamente apaixonado por você",
+      "Eu amo ficar bobo com você rs.",
+      "Eu amo você assim como você ama o texas kkkkk",
+      "Eu amo olhar você arrumando o cabelo",
+      "Eu amo como você olha pra mim",
+      "Eu amo cada segundo que eu passo contigo",
+      "Eu amo falar as coisas que amo em você",
+      "Eu amo a sua capacidade de me fazer rir em qualquer situação",
+      "Eu amo te apertar",
+      "Eu amo ir aos lugares que nunca fui com você",
+      "Eu amo a sua ironia",
+      "Eu amo a sua gargalhada",
+      "Eu amo como você me respeita",
+      "Eu amo o jeito que você me trata",
+      "Eu amo como você me leva na porta do carro toda vez que vou embora",
+      "Eu amo como você é paciente comigo",
+      "Eu amo ser paciente com você",
+      "Eu amo o seu romantismo",
+      "Eu amo como você me tornou romântico",
+      "Eu amo implicar com o seu frifas",
+      "Eu amo quando você implica com o meu lolzinho",
+      "Eu amo ouvir você falando de livros pra mim (serio você devia falar mais)",
+      "Eu amo sua cara de bravinha",
+      "Eu amo dormir nos teus braços",
+      "Eu amo a segurança que você me transmite",
+      "Eu amo deitar no teu colo",
+      "Eu amo mexer no seu cabelo",
+      "Eu amo bagunçar o seu cabelo",
+      "Eu amo a sua velocidade pra se arrumar (não precisa de muito né meu amor SUA LINDA)",
+      "Eu amo a sua vaidade",
+      "Eu amo como você tenta me entender",
+      "Eu amo o seu jeito tímido",
+      "Eu amo decorar o seu jeito",
+      "Eu amo como você me entende antes mesmo de eu terminar de falar",
+      "Eu amo como você pede minha opinião pra tudo",
+      "Eu amo pedir sua opinião pra tudo",
+      "Eu amo quando você usa minha blusa quando está frio",
+      "Eu amo como você é o meu futuro",
+      "Eu amo a sua coxa",
+      "Eu amo os seus dedinhos",
+      "Eu amo como você às vezes fala nada com nada",
+      "Eu amo como nunca queiro deixá-la ir",
+      "Eu amo como odeio ficar longe de você",
+      "Eu amo meu medo de te perder",
+      "Eu amo como você me cuida",
+      "Eu amo te cuidar",
+      "Eu amo te dar carinho",
+      "Eu amo como você é tudo pra mim",
+      "Eu amo o seu otimismo",
+      "Eu amo a sua esperança",
+      "Eu amo o seu medinho (de tudo sua cagona)",
+      "Eu amo a capacidade que você tem de me fazer te amar intensamente",
+      "Eu amo ser diferente com você",
+      "Eu amo não ser um casal normal",
+      "Eu amo a nossa fofura",
+      "Eu amo quando batemos os dentes antes de beijar (durante também kkkk)",
+      "Eu amo como somos desastrados juntos",
+      "Eu amo como conheço cada detalhe seu",
+      "Eu amo como você quer estar comigo sempre",
+      "Eu amo como a gente nunca briga",
+      "Eu amo como você sempre tem a forma mais fofa de fazer as coisas",
+      "Eu amo como você me esquenta no frio",
+      "Eu amo cuidar de você",
+      "Eu amo como você fica ao meu lado, mesmo fazendo algo que você não goste.",
+      "Eu amo como você se sente muito mais alta que eu",
+      "Eu amo ser SEU rapaz",
+      "Eu amo como com a gente é tudo intenso",
+      "Eu amo como com a gente é tudo apaixonante",
+      "Eu amo como com a gente é tudo fofo",
+      "Eu amo quando você me acorda com uma mensagem de bom dia",
+      "Eu amo como você me dá um motivo para eu te amar mais todos os dias",
+      "Eu amo como sempre conseguimos enfrentar tudo para ficar juntos",
+      "Eu amo quando você se assusta",
+      "Eu amo como nos assustamos, rs.",
+      "Eu amo dizer que te amo",
+      "Eu amo como gosto de dizer que te amo toda hora",
+      "Eu amo quando você faz algo inesperado",
+      "Eu amo como você nunca é grosseira comigo",
+      "Eu amo nossos assuntos",
+      "Eu amo a nossa falta de assunto",
+      "Eu amo como você me beija quando não quer ouvir o que vou falar",
+      "Eu amo como você me impressiona",
+      "Eu amo como você não precisa de esforço pra me impressionar",
+      "Eu amo como você não precisa de esforço pra me fazer sorrir",
+      "Eu amo como você não precisa de esforço pra me fazer feliz",
+      "Eu amo como você consegue ser tudo o que preciso",
+      "Eu amo quando acordo no meio da madrugada pensando em você",
+      "Eu amo como todo mundo gosta de você. (MAS EU TENHO CIUMES)",
+      "Eu amo como você consegue ser simpática com todo mundo",
+      "Eu amo como você me trata diferente dos outros",
+      "Eu amo como você fez eu perder o medo de me entregar",
+      "Eu amo como você é minha melhor amiga",
+      "Eu amo como você fica com ciúmes do amendoim comigo kkkk",
+      "Eu amo acordar ao seu lado",
+      "Eu amo o seu jeito de se irritar fácil",
+      "Eu amo ver você empolgada com alguma coisa",
+      "Eu amo quando a gente fofoca juntos",
+      "Eu amo sua alegria",
+      "Eu amo me fazer de desentendido só pra ouvir você explicando algo",
+      "Eu amo seu sorriso após o nosso beijo",
+      "Eu amo suas manias",
+      "Eu amo como você me contagia com sua alegria",
+      "Eu amo a cor dos seus olhos",
+      "Eu amo o brilho dos seus olhos",
+      "Eu amo seu pézinho de difunto",
+      "Eu amo quando você me chama de SEU",
+      "Eu amo o seu jeitinho quando esta altinha (com 2 garrafinha de beats)",
+      "Eu amo aprender sobre seus livros",
+      "Eu amo quando você manda varias mensagens pra mim",
+      "Eu amo quando você me manda um video e fala que é a gente",
+      "EU TE AMO JULIA",
+      "EU AMO VOCÊ MEU AMOR",
+    ];
+
+    let index = 0;
+
+    function mostrarMotivo() {
+      const motivo = document.getElementById("motivo");
+      motivo.style.opacity = 0;
+      setTimeout(() => {
+        motivo.innerText = motivos[index];
+        motivo.style.opacity = 1;
+        index = (index + 1) % motivos.length;
+      }, 300);
+    }
+
+    function login() {
+    const user = document.getElementById("username").value;
+    const pass = document.getElementById("password").value;
+
+    // Usuário e senha definidos
+    const usuarioCorreto = "Julialinda";
+    const senhaCorreta = "Ajuliaéomeuamor";
+
+    if (user === usuarioCorreto && pass === senhaCorreta) {
+      document.getElementById("login").style.display = "none";
+      const mainContent = document.getElementById("main-content");
+      mainContent.style.display = "flex";
+
+        // Suaviza a transição do conteúdo principal
+        setTimeout(() => {
+          mainContent.style.opacity = 1;
+        }, 100);
+
+        // Troca para o primeiro fundo de fotos após login
+        document.body.style.backgroundImage = `url('fotos/foto1.jpg')`;
+
+        startSlideshow();
+        playMusic();
+      } else {
+        alert("Preencha todos os campos!");
+      }
+    }
+
+    // Função para tocar a música
+    function playMusic() {
+      const audio = document.getElementById("bg-music");
+      audio.play();
+    }
+
+    // Troca de fotos de fundo
+    let currentPhotoIndex = 1;
+    const totalPhotos = 9;
+
+    function startSlideshow() {
+      setInterval(() => {
+        currentPhotoIndex = (currentPhotoIndex % totalPhotos) + 1;
+        document.body.style.backgroundImage = `url('fotos/foto${currentPhotoIndex}.jpg')`;
+      }, 4000);
+    }
+
+    // Função para soltar corações
+    function soltarCoracoes() {
+      for (let i = 0; i < 30; i++) {
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.innerText = "❤️";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.fontSize = Math.random() * 20 + 10 + "px";
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 4000);
+      }
+    }
+  </script>
+</body>
+</html>
